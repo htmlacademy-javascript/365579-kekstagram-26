@@ -74,5 +74,8 @@ let comments = () => {
   };
 };
 
+let storageComments = Array.from({length: USER_POST_COUNTER}, comments);
+
 console.log(comments());
+console.log(storageComments);
 
