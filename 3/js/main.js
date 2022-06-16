@@ -42,8 +42,6 @@ function isStringMaxLength(checkString, maxStringLength) {
   return checkString.length <= maxStringLength;
 }
 
-isStringMaxLength('1560', MAX_LENGTH_COMMENT);
-
 //Функция взята с сайта https://developer.mozilla.org, за исключением условий
 //Ищет случайное число в заданном диапазоне
 function getRandomInt(min, max) {
@@ -57,35 +55,29 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//получает элемент случайного массива
+//получает случайный элемент массива
 function getRandomArrayElement (elements) {
   return elements[getRandomInt(0, elements.length -1)];
 }
 
 
-const comments = () => ({
-  avatar: `img/avatar-${  getRandomInt(1, 6)  }.svg`,
+const comments = (index) => ({
+  id: index + 1,
+  avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
   message: getRandomArrayElement(COMMENT),
-  name: `${getRandomArrayElement(NAMES)  } ${  getRandomArrayElement(SURNAMES)}`,
+  name: `${getRandomArrayElement(NAMES)} ${getRandomArrayElement(SURNAMES)}`,
 });
 
-const storageComments = Array.from({length: USER_POST_COUNTER}, comments);
+const storageComments = Array.from({length: USER_POST_COUNTER}, (currentValue, index) => comments(index));
 
-storageComments.forEach((element, index) => {
-  element.id = index + 1;
+
+const photoDescription = (index) => ({
+  id: index + 1,
+  url: `photos/${index + 1}.jpg`,
+  description: getRandomArrayElement(PHOTO_DESCRIPTION),
+  likes: getRandomInt(15, 200),
+  comments: storageComments
 });
 
-
-const getPhotoDescription = (new Array(25)).fill(undefined).map(
-  (_,index)=> ({
-    id: index + 1,
-    url: `photos/${index + 1}.jpg`,
-    description: getRandomArrayElement(PHOTO_DESCRIPTION),
-    likes: getRandomInt(15, 200),
-    comments: storageComments
-  })
-);
-
-console.log(getPhotoDescription);
-
+const getPhotoPost = Array.from({length: USER_POST_COUNTER}, (currentValue, index) => photoDescription(index));
 
