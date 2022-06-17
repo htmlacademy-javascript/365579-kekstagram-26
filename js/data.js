@@ -37,9 +37,4 @@ const PHOTO_DESCRIPTION = [
   'Описание фотографии 6'
 ];
 
-export {COMMENT};
-export {NAMES};
-export {SURNAMES};
-export {PHOTO_DESCRIPTION};
-export {USER_POST_COUNTER};
-export {MAX_LENGTH_COMMENT};
+export {COMMENT, NAMES, SURNAMES, PHOTO_DESCRIPTION, USER_POST_COUNTER, MAX_LENGTH_COMMENT};

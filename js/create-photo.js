@@ -1,11 +1,16 @@
-import {getRandomInt} from './util.js';
-import {getRandomArrayElement} from './util.js';
-import {COMMENT} from './data.js';
-import {NAMES} from './data.js';
-import {SURNAMES} from './data.js';
-import {PHOTO_DESCRIPTION} from './data.js';
-import {USER_POST_COUNTER} from './data.js';
-import {MAX_LENGTH_COMMENT} from './data.js';
+import {
+  getRandomInt,
+  getRandomArrayElement
+} from './util.js';
+
+import {
+  COMMENT,
+  NAMES,
+  SURNAMES,
+  PHOTO_DESCRIPTION,
+  USER_POST_COUNTER,
+  MAX_LENGTH_COMMENT,
+} from './data.js';
 
 //проверяет кол-во символов в строке
 function isStringMaxLength(checkString, maxStringLength) {
