@@ -1,2 +1,3 @@
-import './create-photo.js';
+import './pictures.js';
+
 
