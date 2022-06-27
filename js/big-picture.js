@@ -27,20 +27,22 @@ pictures.forEach((picture) => {
       socialComments.querySelector('.social__text').textContent = message;
     });
 
-    if (bigPicture !== '.hidden') {
-      commentCount.classList.add('hidden');
-      commentsLoader.classList.add('hidden');
-      document.body.classList.add('modal-open');
-
-      bigPictureCancel.addEventListener('click', () => {
-        bigPicture.classList.add('hidden');
-      });
-    }
-
-    document.addEventListener('keydown', (evt) => {
-      if (evt.keyCode === 27) {
-        bigPicture.classList.add('hidden');
-      }
-    });
+    commentCount.classList.add('hidden');
+    commentsLoader.classList.add('hidden');
+    document.body.classList.add('modal-open');
   });
 });
+
+
+bigPictureCancel.addEventListener('click', () => {
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+});
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.keyCode === 27) {
+    bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+});
+
