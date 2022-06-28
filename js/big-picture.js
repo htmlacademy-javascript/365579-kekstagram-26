@@ -3,6 +3,10 @@ import {
   storageComments,
 } from './create-photo.js';
 
+import {
+  KEY_CODES,
+} from './data.js';
+
 const pictures = document.querySelectorAll('.picture');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
@@ -40,8 +44,9 @@ bigPictureCancel.addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (evt) => {
-  if (evt.keyCode === 27) {
+  if (evt.keyCode === KEY_CODES.esc) {
     bigPicture.classList.add('hidden');
+    evt.preventDefault();
     document.body.classList.remove('modal-open');
   }
 });
