@@ -36,4 +36,4 @@ const photoDescription = (index) => ({
 
 const getPhotoPost = Array.from({length: USER_POST_COUNTER}, (currentValue, index) => photoDescription(index));
 
-export {getPhotoPost};
+export {getPhotoPost, storageComments};
