@@ -28,3 +28,4 @@ uploadCancel.addEventListener('click', () => {
   document.body.classList.remove('modal-open');
   uploadFile.innerHTML = '';
 });
+

@@ -1,6 +1,9 @@
 import {
   MAX_LENGTH_COMMENT,
 } from './data.js';
+import {
+  validateHashtag,
+} from './hashtags.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 
@@ -24,10 +27,18 @@ pristine.addValidator(
   `длина комментария не может составлять больше${  MAX_LENGTH_COMMENT  }символов`
 );
 
+pristine.addValidator(
+  imgUploadForm.querySelector('.text__hashtags'),
+  validateHashtag,
+  'неправильное значение поле для хештега'
+);
+
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
-  imgUploadForm.submit();
+  if (pristine.validate()) {
+    imgUploadForm.submit();
+  }
 });
 
 export {imgUploadForm};
