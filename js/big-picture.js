@@ -4,6 +4,7 @@ import {
 } from './create-photo.js';
 
 import {
+  USER_POST_COUNTER,
   KEY_CODES,
 } from './data.js';
 
@@ -13,6 +14,8 @@ const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const socialComments = document.querySelector('.social__comments');
 const commentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
+const commentTemplate = document.querySelector('.social__comment').content;
+const socialCommentFragment = document.createDocumentFragment();
 
 pictures.forEach((picture) => {
   picture.addEventListener('click', () => {
@@ -25,11 +28,25 @@ pictures.forEach((picture) => {
       bigPicture.querySelector('.social__caption').textContent = description;
     });
 
-    storageComments.forEach(({avatar, name, message}) => {
-      socialComments.querySelector('.social__picture').src = avatar;
-      socialComments.getAttribute.alt = name;
-      socialComments.querySelector('.social__text').textContent = message;
-    });
+    for (let i = 0; i < USER_POST_COUNTER; i++) {
+      const comment = commentTemplate.cloneNode(true);
+      comment.children[0].textContent = i; // Записываем содержимое
+      socialCommentFragment.appendChild(comment);
+    }
+
+    socialComments[1].appendChild(socialCommentFragment);
+
+    function getCommentElement() {
+      storageComments.forEach(({avatar, name, message}) => {
+
+        socialComments.querySelector('.social__picture').src = avatar;
+        socialComments.getAttribute.alt = name;
+        socialComments.querySelector('.social__text').textContent = message;
+        socialCommentFragment.appendChild(comment);
+      });
+    }
+
+    socialComments.append(getCommentList());
 
     commentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
