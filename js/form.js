@@ -9,7 +9,7 @@ const imgUpload = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('#upload-cancel');
 
 
-uploadFile.addEventListener('click', () => {
+uploadFile.addEventListener('change', () => {
   imgUpload.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
@@ -18,7 +18,7 @@ uploadFile.addEventListener('click', () => {
       imgUpload.classList.add('hidden');
       evt.preventDefault();
       document.body.classList.remove('modal-open');
-      uploadFile.innerHTML = '';
+      uploadFile.value = '';
     }
   });
 });
@@ -26,6 +26,6 @@ uploadFile.addEventListener('click', () => {
 uploadCancel.addEventListener('click', () => {
   imgUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  uploadFile.innerHTML = '';
+  uploadFile.value = '';
 });
 
