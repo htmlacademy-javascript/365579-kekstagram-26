@@ -59,11 +59,11 @@ function openBigPicture(url, likes, comments, description) {
       }
     });
 
-    socialCommentCount.querySelector('.comment-count--shown').textContent = parseInt(commentCount) + 5;
+    socialCommentCount.querySelector('.comment-count--shown').textContent = parseInt(commentCount, 10) + 5;
 
     if (onCkickCommentsLoader.length <= 5) {
       commentsLoader.classList.add('hidden');
-      socialCommentCount.querySelector('.comment-count--shown').textContent = parseInt(commentCount) + onCkickCommentsLoader.length;
+      socialCommentCount.querySelector('.comment-count--shown').textContent = parseInt(commentCount, 10) + onCkickCommentsLoader.length;
     }
   });
 
