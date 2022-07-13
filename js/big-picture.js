@@ -42,6 +42,11 @@ function openBigPicture(url, likes, comments, description) {
     commentsList.append(el);
   });
 
+  if (arrayComments.length <= 5) {
+    commentsLoader.classList.add('hidden');
+    socialCommentCount.querySelector('.comment-count--shown').textContent = arrayComments.length;
+  }
+
   document.body.classList.add('modal-open');
 
   commentsLoader.addEventListener('click', () => {
@@ -52,11 +57,13 @@ function openBigPicture(url, likes, comments, description) {
       if (index <= 4) {
         element.classList.remove('hidden');
       }
-      parseInt(commentCount) + 5;
     });
-    console.log(parseInt);
+
+    socialCommentCount.querySelector('.comment-count--shown').textContent = parseInt(commentCount) + 5;
+
     if (onCkickCommentsLoader.length <= 5) {
       commentsLoader.classList.add('hidden');
+      socialCommentCount.querySelector('.comment-count--shown').textContent = parseInt(commentCount) + onCkickCommentsLoader.length;
     }
   });
 
