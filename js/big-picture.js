@@ -4,15 +4,13 @@ import {
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
-const commentCount = bigPicture.querySelector('.social__comment-count');
+const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const commentsList = bigPicture.querySelector('.social__comments');
 
 function closeBigPicture() {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  commentCount.classList.remove('hidden');
-  commentsLoader.classList.remove('hidden');
 }
 
 function openBigPicture(url, likes, comments, description) {
@@ -37,13 +35,30 @@ function openBigPicture(url, likes, comments, description) {
     commentsList.removeChild(commentsList.firstChild);
   }
 
-  arrayComments.forEach((el) => {
+  arrayComments.forEach((el, index) => {
+    if (index > 4) {
+      el.classList.add('hidden');
+    }
     commentsList.append(el);
   });
 
-  commentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
   document.body.classList.add('modal-open');
+
+  commentsLoader.addEventListener('click', () => {
+    const onCkickCommentsLoader = commentsList.querySelectorAll('.hidden');
+    const commentCount = socialCommentCount.querySelector('.comment-count--shown').textContent;
+
+    onCkickCommentsLoader.forEach((element, index) => {
+      if (index <= 4) {
+        element.classList.remove('hidden');
+      }
+      parseInt(commentCount) + 5;
+    });
+    console.log(parseInt);
+    if (onCkickCommentsLoader.length <= 5) {
+      commentsLoader.classList.add('hidden');
+    }
+  });
 
   bigPictureCancel.addEventListener('click', () => {
     closeBigPicture();
