@@ -11,6 +11,25 @@ const commentsList = bigPicture.querySelector('.social__comments');
 function closeBigPicture() {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  commentsLoader.removeEventListener('click', loadComments);
+}
+
+function loadComments () {
+  const onClickCommentsLoader = commentsList.querySelectorAll('.hidden');
+  const commentCount = socialCommentCount.querySelector('.comment-count--shown').textContent;
+
+  onClickCommentsLoader.forEach((element, index) => {
+    if (index <= 4) {
+      element.classList.remove('hidden');
+    }
+  });
+
+  socialCommentCount.querySelector('.comment-count--shown').textContent = parseInt(commentCount, 10) + 5;
+
+  if (onClickCommentsLoader.length <= 5) {
+    commentsLoader.classList.add('hidden');
+    socialCommentCount.querySelector('.comment-count--shown').textContent = parseInt(commentCount, 10) + onClickCommentsLoader.length;
+  }
 }
 
 function openBigPicture(url, likes, comments, description) {
@@ -42,23 +61,17 @@ function openBigPicture(url, likes, comments, description) {
     commentsList.append(el);
   });
 
+  if (arrayComments.length <= 5) {
+    commentsLoader.classList.add('hidden');
+    socialCommentCount.querySelector('.comment-count--shown').textContent = arrayComments.length;
+  } else {
+    commentsLoader.classList.remove('hidden');
+    socialCommentCount.querySelector('.comment-count--shown').textContent = 5;
+  }
+
   document.body.classList.add('modal-open');
 
-  commentsLoader.addEventListener('click', () => {
-    const onCkickCommentsLoader = commentsList.querySelectorAll('.hidden');
-    const commentCount = socialCommentCount.querySelector('.comment-count--shown').textContent;
-
-    onCkickCommentsLoader.forEach((element, index) => {
-      if (index <= 4) {
-        element.classList.remove('hidden');
-      }
-      parseInt(commentCount) + 5;
-    });
-    console.log(parseInt);
-    if (onCkickCommentsLoader.length <= 5) {
-      commentsLoader.classList.add('hidden');
-    }
-  });
+  commentsLoader.addEventListener('click', loadComments);
 
   bigPictureCancel.addEventListener('click', () => {
     closeBigPicture();

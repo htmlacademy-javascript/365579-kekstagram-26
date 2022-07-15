@@ -9,13 +9,7 @@ import {
   SURNAMES,
   PHOTO_DESCRIPTION,
   USER_POST_COUNTER,
-  MAX_LENGTH_COMMENT,
 } from './data.js';
-
-//проверяет кол-во символов в строке
-function isStringMaxLength(checkString, maxStringLength) {
-  return checkString.length <= maxStringLength;
-}
 
 const comments = (index) => ({
   id: index + 1,
