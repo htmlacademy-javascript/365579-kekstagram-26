@@ -45,6 +45,9 @@ function openBigPicture(url, likes, comments, description) {
   if (arrayComments.length <= 5) {
     commentsLoader.classList.add('hidden');
     socialCommentCount.querySelector('.comment-count--shown').textContent = arrayComments.length;
+  } else {
+    commentsLoader.classList.remove('hidden');
+    socialCommentCount.querySelector('.comment-count--shown').textContent = 5;
   }
 
   document.body.classList.add('modal-open');
