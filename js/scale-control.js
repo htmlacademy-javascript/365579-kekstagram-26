@@ -9,7 +9,7 @@ const imgUploadPreview = document.querySelector('.img-upload__preview');
 
 scaleMinValue.addEventListener('click', () => {
   if (parseInt(scaleValue.value, 10) <= MAX_SCALE && parseInt(scaleValue.value, 10) > MIN_SCALE) {
-    scaleValue.value = parseInt(scaleValue.value, 10) -+ 25;
+    scaleValue.value = parseInt(scaleValue.value, 10) -+ MIN_SCALE;
   }
 });
 
@@ -17,6 +17,6 @@ scaleMaxValue.addEventListener('click', () => {
   if (parseInt(scaleValue.value, 10) === MAX_SCALE) {
     return scaleValue.value;
   } else {
-    scaleValue.value = parseInt(scaleValue.value, 10) + 25;
+    scaleValue.value = parseInt(scaleValue.value, 10) + MIN_SCALE;
   }
 });
