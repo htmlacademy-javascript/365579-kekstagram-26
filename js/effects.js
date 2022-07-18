@@ -3,6 +3,7 @@ import {
 } from './scale-control.js';
 
 const sliderElement = document.querySelector('.effect-level__slider');
+sliderElement.value = `${100}%`;
 const effectsValue = document.querySelector('.effect-level__value');
 const effectButtons = document.querySelectorAll('[name="effect"]');
 
@@ -28,10 +29,15 @@ function removeEffect () {
 
 effectButtons.forEach((element) => {
 
-  element.addEventListener('change', (evt) => {
+  element.addEventListener('change', () => {
 
-    if (evt.value === 'chrome') {
-      imgUploadPreview.style.filter = `grayscale(${element.value})`;
+    if (element.value !== 'none') {
+      imgUploadPreview.classList.add(`effects__preview--${element.value}`);
+    } else {
+      sliderElement.noUiSlider.destroy();
+    }
+    if (element.value === 'chrome') {
+      imgUploadPreview.style.filter = `grayscale(${sliderElement.noUiSlider.get()})`;
       sliderElement.noUiSlider.updateOptions({
         range: {
           min: 0,
@@ -40,12 +46,6 @@ effectButtons.forEach((element) => {
         start: 1,
         step: 0.1,
       });
-    }
-
-    if (element.value !== 'none') {
-      imgUploadPreview.classList.add(`effects__preview--${element.value}`);
-    } else {
-      sliderElement.noUiSlider.destroy();
     }
   });
 });
