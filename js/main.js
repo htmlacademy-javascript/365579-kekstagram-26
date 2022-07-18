@@ -4,4 +4,4 @@ import './form.js';
 import './validate.js';
 import './hashtags.js';
 import './scale-control.js';
-
+import './effects.js';

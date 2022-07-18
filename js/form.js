@@ -3,6 +3,12 @@ import {
 } from './data.js';
 import './validate.js';
 import './hashtags.js';
+import {
+  scaleMinValue,
+  scaleMaxValue,
+  scaleControlMin,
+  scaleControlMax,
+} from './scale-control.js';
 
 const uploadFile = document.querySelector('#upload-file');
 const imgUpload = document.querySelector('.img-upload__overlay');
@@ -18,6 +24,8 @@ uploadFile.addEventListener('change', () => {
       imgUpload.classList.add('hidden');
       evt.preventDefault();
       document.body.classList.remove('modal-open');
+      scaleMinValue.removeEventListener('click', scaleControlMin);
+      scaleMaxValue.removeEventListener('click', scaleControlMax);
       uploadFile.value = '';
     }
   });
@@ -26,6 +34,8 @@ uploadFile.addEventListener('change', () => {
 uploadCancel.addEventListener('click', () => {
   imgUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  scaleMinValue.removeEventListener('click', scaleControlMin);
+  scaleMaxValue.removeEventListener('click', scaleControlMax);
   uploadFile.value = '';
 });
 
