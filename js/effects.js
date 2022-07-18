@@ -37,7 +37,7 @@ effectButtons.forEach((element) => {
       sliderElement.noUiSlider.destroy();
     }
     if (element.value === 'chrome') {
-      imgUploadPreview.style.filter = `grayscale(${sliderElement.noUiSlider.get()})`;
+
       sliderElement.noUiSlider.updateOptions({
         range: {
           min: 0,
@@ -46,6 +46,7 @@ effectButtons.forEach((element) => {
         start: 1,
         step: 0.1,
       });
+      imgUploadPreview.style.filter = `grayscale(${sliderElement.noUiSlider.get()})`;
     }
   });
 });
