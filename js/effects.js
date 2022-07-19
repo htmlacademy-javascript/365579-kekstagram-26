@@ -7,6 +7,8 @@ sliderElement.value = `${100}%`;
 const effectsValue = document.querySelector('.effect-level__value');
 const effectButtons = document.querySelectorAll('[name="effect"]');
 
+sliderElement.classList.add('hidden');
+
 noUiSlider.create(sliderElement, {
   range: {
     min: 0,
@@ -17,34 +19,39 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
+const sliderValue = sliderElement.noUiSlider.get();
+
 sliderElement.noUiSlider.on('update', () => {
-  effectsValue.value = sliderElement.noUiSlider.get();
+  effectsValue.value = sliderValue;
 
   if (effectButtons[1].value === 'chrome') {
-    imgUploadPreview.style.filter = `grayscale(${sliderElement.noUiSlider.get()})`;
+    imgUploadPreview.style.filter = `grayscale(${sliderValue})`;
   }
   if (effectButtons[2].value === 'sepia') {
-    imgUploadPreview.style.filter = `sepia(${sliderElement.noUiSlider.get()})`;
+    imgUploadPreview.style.filter = `sepia(${sliderValue})`;
   } else if (effectButtons[3].value === 'marvin') {
-    imgUploadPreview.style.filter = `invert(${sliderElement.noUiSlider.get()}%)`;
+    imgUploadPreview.style.filter = `invert(${sliderValue}%)`;
   }
   if (effectButtons[4].value === 'phobos') {
-    imgUploadPreview.style.filter = `blur(${sliderElement.noUiSlider.get()}px)`;
+    imgUploadPreview.style.filter = `blur(${sliderValue}px)`;
   }
   if (effectButtons[5].value === 'heat') {
-    imgUploadPreview.style.filter = `brightness(${sliderElement.noUiSlider.get()})`;
+    imgUploadPreview.style.filter = `brightness(${sliderValue})`;
   }
   if (effectButtons[0].value === 'none') {
-    imgUploadPreview.style.filter = `none(${sliderElement.noUiSlider.get()})`;
+    imgUploadPreview.style.filter = `none(${sliderValue})`;
   }
 });
 
 function removeEffect () {
-  if (imgUploadPreview.match('.effects__preview--')) {
-    for(let i = 0; i < effectButtons.length; i++) {
-      imgUploadPreview.classList.remove('');
+  effectButtons.addEventListener('change', (evt) => {
+    const currentPictureClass = imgUploadPreview.match('.effects__preview--');
+    if (currentPictureClass) {
+      currentPictureClass.classList.remove('effects__preview--');
     }
-  }
+
+    imgUploadPreview.classList.add(`effects__preview--${evt.value}`);
+  });
 }
 
 effectButtons.forEach((element) => {
@@ -52,9 +59,10 @@ effectButtons.forEach((element) => {
   element.addEventListener('change', () => {
 
     if (element.value === 'none') {
-      sliderElement.noUiSlider.destroy();
+      sliderElement.classList.add('hidden');
     } else if (element.value === 'chrome') {
       imgUploadPreview.classList.add(`effects__preview--${element.value}`);
+      sliderElement.classList.remove('hidden');
       if (imgUploadPreview.includes('.effects__preview--')) {
         for(let i = 0; i < effectButtons.length; i++) {
           imgUploadPreview.classList.remove(`effects__preview--${element.value}`);
@@ -70,6 +78,7 @@ effectButtons.forEach((element) => {
       });
     } else if (element.value === 'sepia') {
       imgUploadPreview.classList.add(`effects__preview--${element.value}`);
+      sliderElement.classList.remove('hidden');
       if (imgUploadPreview.includes('.effects__preview--')) {
         for(let i = 0; i < effectButtons.length; i++) {
           imgUploadPreview.classList.remove(`effects__preview--${element.value}`);
@@ -85,6 +94,7 @@ effectButtons.forEach((element) => {
       });
     } else if (element.value === 'marvin') {
       imgUploadPreview.classList.add(`effects__preview--${element.value}`);
+      sliderElement.classList.remove('hidden');
       if (imgUploadPreview.includes('.effects__preview--')) {
         for(let i = 0; i < effectButtons.length; i++) {
           imgUploadPreview.classList.remove(`effects__preview--${element.value}`);
@@ -100,6 +110,7 @@ effectButtons.forEach((element) => {
       });
     } else if (element.value === 'phobos') {
       imgUploadPreview.classList.add(`effects__preview--${element.value}`);
+      sliderElement.classList.remove('hidden');
       if (imgUploadPreview.includes('.effects__preview--')) {
         for(let i = 0; i < effectButtons.length; i++) {
           imgUploadPreview.classList.remove(`effects__preview--${element.value}`);
@@ -115,6 +126,7 @@ effectButtons.forEach((element) => {
       });
     } else if (element.value === 'heat') {
       imgUploadPreview.classList.add(`effects__preview--${element.value}`);
+      sliderElement.classList.remove('hidden');
       if (imgUploadPreview.includes('.effects__preview--')) {
         for(let i = 0; i < effectButtons.length; i++) {
           imgUploadPreview.classList.remove(`effects__preview--${element.value}`);
