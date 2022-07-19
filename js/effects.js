@@ -19,6 +19,18 @@ noUiSlider.create(sliderElement, {
 
 sliderElement.noUiSlider.on('update', () => {
   effectsValue.value = sliderElement.noUiSlider.get();
+
+  if (effectButtons[1].value === 'chrome') {
+    imgUploadPreview.style.filter = `grayscale(${sliderElement.noUiSlider.get()})`;
+  } else if (effectButtons[2].value === 'sepia') {
+    imgUploadPreview.style.filter = `sepia(${sliderElement.noUiSlider.get()})`;
+  } else if (effectButtons[3].value === 'marvin') {
+    imgUploadPreview.style.filter = `invert(${sliderElement.noUiSlider.get()}%)`;
+  } else if (effectButtons[4].value === 'phobos') {
+    imgUploadPreview.style.filter = `blur(${sliderElement.noUiSlider.get()}px)`;
+  } else if (effectButtons[5].value === 'heat') {
+    imgUploadPreview.style.filter = `brightness(${sliderElement.noUiSlider.get()})`;
+  }
 });
 
 function removeEffect () {
@@ -31,13 +43,9 @@ effectButtons.forEach((element) => {
 
   element.addEventListener('change', () => {
 
-    if (element.value !== 'none') {
-      imgUploadPreview.classList.add(`effects__preview--${element.value}`);
-    } else {
-      sliderElement.noUiSlider.destroy();
-    }
-    if (element.value === 'chrome') {
 
+    if (element.value === 'chrome') {
+      imgUploadPreview.classList.add(`effects__preview--${element.value}`);
       sliderElement.noUiSlider.updateOptions({
         range: {
           min: 0,
@@ -46,8 +54,48 @@ effectButtons.forEach((element) => {
         start: 1,
         step: 0.1,
       });
-      imgUploadPreview.style.filter = `grayscale(${sliderElement.noUiSlider.get()})`;
+    } else if (element.value === 'sepia') {
+      imgUploadPreview.classList.add(`effects__preview--${element.value}`);
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          min: 0,
+          max: 1,
+        },
+        start: 1,
+        step: 0.1,
+      });
+    } else if (element.value === 'marvin') {
+      imgUploadPreview.classList.add(`effects__preview--${element.value}`);
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          min: 0,
+          max: 100,
+        },
+        start: 100,
+        step: 1,
+      });
+    } else if (element.value === 'phobos') {
+      imgUploadPreview.classList.add(`effects__preview--${element.value}`);
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          min: 0,
+          max: 3,
+        },
+        start: 3,
+        step: 0.1,
+      });
+    } else if (element.value === 'heat') {
+      imgUploadPreview.classList.add(`effects__preview--${element.value}`);
+      sliderElement.noUiSlider.updateOptions({
+        range: {
+          min: 1,
+          max: 3,
+        },
+        start: 3,
+        step: 0.1,
+      });
     }
   });
 });
+
 
