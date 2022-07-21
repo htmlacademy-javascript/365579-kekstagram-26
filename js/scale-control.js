@@ -1,9 +1,9 @@
 const MAX_SCALE = 100;
 const MIN_SCALE = 25;
+
 const scaleMinValue = document.querySelector('.scale__control--smaller');
 const scaleMaxValue = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
-scaleValue.value = `${100}%`;
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 
 function scaleControlMin () {
@@ -21,9 +21,5 @@ function scaleControlMax () {
     imgUploadPreview.style.transform = `scale(${scaleValue.value})`;
   }
 }
-
-scaleMinValue.addEventListener('click', scaleControlMin);
-
-scaleMaxValue.addEventListener('click', scaleControlMax);
 
 export {scaleMinValue, scaleMaxValue, scaleControlMin, scaleControlMax, imgUploadPreview};
