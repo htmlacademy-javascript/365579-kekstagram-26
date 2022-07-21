@@ -11,6 +11,7 @@ function validateHashtag () {
   const maxHachtagsLength = 20;
   const maxHachtagsCount = 5;
 
+
   if (hashtagsSet.length > uniqueHashtag.length) {
     return false;
   }
@@ -21,8 +22,12 @@ function validateHashtag () {
 
   for (let i = 0; i < hashtagsSet.length; i++) {
 
+    if (hashtagsSet[i] === '') {
+      return true;
+    }
+
     if (hashtagsSet[i] === '#') {
-      return 'Хеш-тег не может состоять тольк из "#": ';
+      return false;
     }
 
     if (hashtagsSet[i][0] !== '#') {
