@@ -20,9 +20,28 @@ const uploadFile = document.querySelector('#upload-file');
 const imgUpload = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('#upload-cancel');
 
-uploadFile.addEventListener('change', () => {
+function closeForm() {
+  imgUpload.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  uploadFile.value = '';
+}
+
+uploadFile.addEventListener('change', (event) => {
   imgUploadPreview.removeAttribute('style');
   imgUploadPreview.removeAttribute('class');
+
+  const target = event.target;
+
+  if (!target.files.length) {
+    return;
+  }
+
+  const fileReader = new FileReader();
+  fileReader.onload = function() {
+    imgUploadPreview.src = fileReader.result;
+  };
+
+  fileReader.readAsDataURL(target.files[0]);
 
   slider.classList.add('hidden');
   sliderElement.noUiSlider.updateOptions(sliderMainSettings);
@@ -35,20 +54,18 @@ uploadFile.addEventListener('change', () => {
 
   document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === KEY_CODES.esc) {
-      imgUpload.classList.add('hidden');
       evt.preventDefault();
-      document.body.classList.remove('modal-open');
       scaleMinValue.removeEventListener('click', scaleControlMin);
       scaleMaxValue.removeEventListener('click', scaleControlMax);
-      uploadFile.value = '';
+      closeForm();
     }
   });
 });
 
 uploadCancel.addEventListener('click', () => {
-  imgUpload.classList.add('hidden');
-  document.body.classList.remove('modal-open');
   scaleMinValue.removeEventListener('click', scaleControlMin);
   scaleMaxValue.removeEventListener('click', scaleControlMax);
-  uploadFile.value = '';
+  closeForm();
 });
+
+export {closeForm};

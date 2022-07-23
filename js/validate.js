@@ -7,6 +7,18 @@ import {
   validateHashtag,
 } from './hashtags.js';
 
+import {
+  closeForm,
+} from './form.js';
+
+import {
+  sendPhoto,
+} from './api.js';
+
+import {
+  errorLoadMessage,
+} from './message.js';
+
 const imgUploadForm = document.querySelector('.img-upload__form');
 const hashtags = document.querySelector('.text__hashtags');
 
@@ -43,14 +55,20 @@ hashtags.addEventListener('keydown', (evt) => {
   }
 });
 
-imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const setUserFormSubmit = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-  if (pristine.validate()) {
-    imgUploadForm.submit();
-  }
-});
+    if (pristine.validate()) {
+      sendPhoto(
+        () => onSuccess(),
+        () => errorLoadMessage(),
+        new FormData(evt.target),
+      );
+    }
+  });
+};
 
-export {imgUploadForm, hashtags};
 
+export {imgUploadForm, hashtags, validateComments, setUserFormSubmit};
 

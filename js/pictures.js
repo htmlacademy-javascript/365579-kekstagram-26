@@ -1,4 +1,3 @@
-import {getPhotoPost} from './create-photo.js';
 import {openBigPicture} from './big-picture.js';
 
 const userPicture = document.querySelector('.pictures');
@@ -23,6 +22,6 @@ const renderUsersPhotos = (usersPhoto) => {
   });
 
   userPicture.appendChild(pictureGaleryFragment);
-}
+};
 
 export {renderUsersPhotos};

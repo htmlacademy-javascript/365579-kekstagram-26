@@ -1,5 +1,3 @@
-import {renderUsersPhotos} from './pictures.js';
-
 const getUsersPhotos = async (onSuccess, onFail) => {
   try {
     const response = await fetch(
@@ -11,10 +9,32 @@ const getUsersPhotos = async (onSuccess, onFail) => {
     }
 
     const offers = await response.json();
-    renderUsersPhotos(offers);
+    onSuccess(offers);
   } catch (error) {
     onFail(error.message);
   }
 };
 
-export {getUsersPhotos,};
+const sendPhoto = async (onSuccess, onFail, body) => {
+  try {
+    const response = await fetch(
+      'https://26.javascript.pages.academy/kekstagram',
+      {
+        method: 'POST',
+        body,
+      }
+    );
+
+    if(!response.ok) {
+      throw new Error('Не удалось отправить форму. Попробуйте еще раз');
+    }
+
+    onSuccess();
+  } catch (error) {
+    onFail(error.message);
+  }
+};
+
+export {getUsersPhotos, sendPhoto};
+
+
