@@ -6,6 +6,9 @@ import {
 import {
   getUsersPhotos,
 } from './api.js';
-import './filters.js';
+import {
+  setImgFilters
+} from './filters.js';
 
-getUsersPhotos(renderUsersPhotos, showAllert);
+getUsersPhotos(renderUsersPhotos, setImgFilters, showAllert);
+
