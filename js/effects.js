@@ -75,5 +75,5 @@ effectButtons.forEach((element) => {
   });
 });
 
-export {slider, sliderElement, imgUploadPreview, sliderMainSettings};
+export {slider, sliderElement};
 

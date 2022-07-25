@@ -18,22 +18,32 @@ const showAllert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const errorLoadMessage = () => {
-  const errorFragment = document.createElement('div');
-  const errorTemplate = document.querySelector('#error');
-  const closeAlertButton = document.querySelector('.error__button');
+const messageFragment = document.createElement('div');
+const errorTemplate = document.querySelector('#error');
+const successTemplate = document.querySelector('#success');
+const closeAlertButton = document.querySelectorAll('.error__button');
+const successButton = document.querySelectorAll('.success__button');
 
-  errorFragment.append(errorTemplate.content.cloneNode(true));
-  document.body.append(errorFragment);
+const successMessage = () => {
+  messageFragment.append(successTemplate.content.cloneNode(true));
+  document.body.append(messageFragment);
+  messageFragment.style.zIndex = '100';
 
-  function closeButton() {
-    errorFragment.remove();
-
-    closeAlertButton.removeEventListener('click', closeButton);
-    closeAlertButton.removeEventListener('keydown', errorLoadMessage);
-  }
-
-  closeAlertButton.addEventListener('click', closeButton);
+  successButton.addEventListener('click', () => {
+    messageFragment.remove();
+  });
 };
 
-export {showAllert, errorLoadMessage};
+
+const errorLoadMessage = () => {
+  messageFragment.append(errorTemplate.content.cloneNode(true));
+  document.body.append(messageFragment);
+  messageFragment.style.zIndex = '100';
+
+  closeAlertButton.addEventListener('click', () => {
+    messageFragment.remove();
+  });
+};
+
+
+export {showAllert, successMessage, errorLoadMessage};

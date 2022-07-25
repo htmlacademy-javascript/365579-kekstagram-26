@@ -2,8 +2,6 @@ import {
   KEY_CODES,
   sliderMainSettings,
 } from './data.js';
-import './validate.js';
-import './hashtags.js';
 import {
   scaleMinValue,
   scaleMaxValue,
@@ -15,12 +13,18 @@ import {
   slider,
   sliderElement,
 } from './effects.js';
+import {
+  successMessage,
+} from './message.js';
 
 const uploadFile = document.querySelector('#upload-file');
 const imgUpload = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('#upload-cancel');
 
-function closeForm() {
+function closeForm(data = '') {
+  if (data.length !== 0) {
+    successMessage();
+  }
   imgUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadFile.value = '';

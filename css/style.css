@@ -293,7 +293,7 @@ main {
 .img-upload__form {
   position: relative;
   min-height: 569px;
-
+  z-index: 1;
   background-color: #eed21e;
   background-image: url("../img/logo-background-1.jpg");
   background-repeat: no-repeat;

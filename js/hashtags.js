@@ -1,10 +1,6 @@
-import {
-  hashtags,
-} from './validate.js';
-
-function validateHashtag () {
+function validateHashtag (hashtags) {
   const re = /^#[A-Za-zA-Яа-яЕё0-9]{1,19}$/;
-  const hashtag = ` ${hashtags.value.toLowerCase()}`;
+  const hashtag = ` ${hashtags.toLowerCase()}`;
   const hashtagsSet = hashtag.split(' ');
   hashtagsSet.shift();
   const uniqueHashtag = Array.from(new Set(hashtagsSet));
