@@ -1,4 +1,4 @@
-import {renderUsersPhotos} from './pictures.js';
+import {successData} from './pictures.js';
 import './validate.js';
 import {
   showAllert,
@@ -6,9 +6,7 @@ import {
 import {
   getUsersPhotos,
 } from './api.js';
-import {
-  setImgFilters
-} from './filters.js';
+import './filters.js';
 
-getUsersPhotos(renderUsersPhotos, setImgFilters, showAllert);
+getUsersPhotos(successData, showAllert);
 

@@ -1,89 +1,57 @@
-import {
-  getRandomArrayElement
-} from './util.js';
-import {
-  COUNT_RANDOM_PHOTOS,
-  RERENDER_DELAY,
-} from './data.js';
-import {
-  debounce
-} from './util.js';
-import {
-  renderUsersPhotos,
-} from './pictures.js';
+import {getRandomInt} from './util.js';
+import {renderUsersPhotos} from './pictures.js';
 
-const imgFiltersElement = document.querySelector('.img-filters');
-const filterDefaultElement = document.querySelector('#filter-default');
-const filterRandomElement = document.querySelector('#filter-random');
-const filterDiscussedElement = document.querySelector('#filter-discussed');
-const filters = document.querySelectorAll('.img-filters__button');
-const activeButton = 'img-filters__button--active';
+const filtersPhoto = (usersPhoto) => {
+  const filters = document.querySelector('.img-filters');
+  const filtersButtons = filters.querySelectorAll('.img-filters__button');
+  const filterMethods = {
+    default: (array) => array, // это просто возвращает то же что нам пришло
+    random: (array) => sortsPicturesRandom(array), // это возвращает random
+    discussed: (array) => sortsPicturesByComment(array), // это возвращает те что комментируются
+  };
 
-// Функция для сортировки фото по убыванию комментариев
-function compareCommentNumbers(a, b) {
-  return b.comments.length - a.comments.length;
-}
+  filters.classList.remove('img-filters--inactive'); // просто показываем фильры
 
-// Функция удаляет класс активного фильтра с кнопки
-const removeCurrentFilter = () => {
-  filters.forEach((element) => {
-    if(element.classList.contains(activeButton)) {
-      element.classList.remove(activeButton);
-    }
+  filtersButtons.forEach((button) => { // бегаем по кнопкам фильтров
+    const filterType = button.getAttribute('id').replace('filter-', ''); // у кнопки есть id и он равен значению filter-random как пример. Я просто отрезаю filter- от него и остается random.
+
+    button.addEventListener('click', (evt) => { // каждой кнопке вешаем слушатель
+      const filteredPhotos = filterMethods[filterType](usersPhoto); // вызываем нужный нам фильтр
+      renderUsersPhotos(filteredPhotos); // выводим то что получилось после фильтрации (ну естественно вместо console.log надо отрендерить все картинки, то есть по сути надо сделать универсальную функцию рендера и её вызывать и тут и там где у тебя рендерятся картинки сразу после загрузки данных)
+
+      // просто работаем с кнопочками
+      evt.preventDefault();
+
+      filtersButtons.forEach((el) => { // нам надо у всех кнопок удалить класс активности и присвоить нынешней кнопке этот класс. Собственно вплоть до 28 строки включительно я это и делаю. Это мы делали кучу раз
+        el.classList.remove('img-filters__button--active');
+      });
+
+      button.classList.add('img-filters__button--active');
+    });
   });
 };
 
-// Функция возвращает отфильтрованные фото
-let photos = [];
-const renderComments = (filteredPhotos) => {
-  photos = filteredPhotos;
+const sortsPicturesRandom = (pictures) => {
+  const picturesCopy = pictures.slice(); // нам ужна копия чтоб не менять непосредственно параметр функции.
+  const randomPictures = [];
+
+  for (let i = 0; i < pictures.length; i++) {
+    const randomIndex = getRandomInt(0, (picturesCopy.length - 1)); // я думаю тут очевидная вещь происходит и не нуждается в описании))
+    const picture = picturesCopy.splice(randomIndex, 1)[0]; // кого-то выбираем из массива фоток
+    randomPictures.push(picture); // вставляем этого кого-то
+  }
+
+  return randomPictures;
 };
 
-// Функция возвращает массив фото исходя из нажатой кнопки
-const getFilteredPhotos = (photos, choosenFilter) => {
-  let filteredPhotos = [];
-  return function () {
-    switch(choosenFilter) {
-      case filterDefaultElement:
-        filterDefaultElement.classList.add(activeButton);
-        filteredPhotos = photos.slice();
-        break;
-      case filterRandomElement:
-        filterRandomElement.classList.add(activeButton);
-        for(let i = 0; i <= COUNT_RANDOM_PHOTOS; i++) {
-          filteredPhotos.push(getRandomArrayElement(photos));
-        }
-        break;
-      case filterDiscussedElement:
-        filterDiscussedElement.classList.add(activeButton);
+const sortsPicturesByComment = (pictures) => {
+  const picturesCopy = pictures.slice(); // опять же чтоб не менять параметр
 
-        filteredPhotos = photos.slice().sort(compareCommentNumbers);
-        break;
-    }
-    return filteredPhotos;
-  }();
+  picturesCopy.sort((a, b) =>  // изучаем как работает sort. Там всё просто
+    a.comments.length - b.comments.length
+  );
+
+  return picturesCopy.reverse(); // почему reverse – вывести без него и смотреть как выведется (в обратную сторону из-за особенностей sort).
 };
 
-const setImgFilters = (photos) => {
-
-  imgFiltersElement.classList.remove('img-filters--inactive');
-
-  imgFiltersElement.addEventListener('click', (evt) => {
-    const choosenFilter = evt.target;
-
-    if(choosenFilter.classList.contains('img-filters__button--active') ||
-      !choosenFilter.classList.contains('img-filters__button')) {
-      return;
-    }
-    removeCurrentFilter();
-    const filteredPhotos = getFilteredPhotos(photos, choosenFilter);
-    // Отрисовываем отфильтрованные фото
-    debounce(() => renderUsersPhotos(filteredPhotos), RERENDER_DELAY)();
-
-    // Обновляем данные для отрисовки комментариев отфильтрованных фото
-    renderComments(filteredPhotos);
-  });
-
-};
-
-export {setImgFilters};
+export {filtersPhoto};

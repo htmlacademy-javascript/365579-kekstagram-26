@@ -1,4 +1,5 @@
 import {openBigPicture} from './big-picture.js';
+import {filtersPhoto} from './filters.js';
 
 const userPicture = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
@@ -7,6 +8,11 @@ const pictureTemplate = document.querySelector('#picture')
 
 const renderUsersPhotos = (usersPhoto) => {
   const pictureGaleryFragment = document.createDocumentFragment();
+
+  const pictureElements = userPicture.querySelectorAll('.picture');
+  pictureElements.forEach((element) => {
+    element.remove();
+  });
 
   usersPhoto.forEach(({url, likes, comments, description}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
@@ -24,4 +30,9 @@ const renderUsersPhotos = (usersPhoto) => {
   userPicture.appendChild(pictureGaleryFragment);
 };
 
-export {renderUsersPhotos};
+const successData = (usersPhoto) => {
+  filtersPhoto(usersPhoto);
+  renderUsersPhotos(usersPhoto);
+};
+
+export {successData, renderUsersPhotos};
