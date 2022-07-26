@@ -8,23 +8,38 @@ import {
   scaleControlMin,
   scaleControlMax,
   imgUploadPreview,
+  scaleValue,
+  MAX_SCALE,
 } from './scale-control.js';
 import {
   slider,
   sliderElement,
 } from './effects.js';
-import {
-  successMessage,
-} from './message.js';
 
 const uploadFile = document.querySelector('#upload-file');
 const imgUpload = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('#upload-cancel');
 
-function closeForm(data = '') {
-  if (data.length !== 0) {
-    successMessage();
+function closeForm(isFormSubmit = false) {
+  if (isFormSubmit) {
+    const success = document.querySelector('#success');
+
+    document.body.appendChild(success.content.cloneNode(true));
+
+    const successButton = document.querySelector('.success__button');
+
+    successButton.addEventListener('click', () => closeSuccessButton(successButton));
   }
+
+  function closeSuccessButton(successButton) {
+    document.querySelector('.success').remove();
+    successButton.removeEventListener('click', closeSuccessButton);
+    document.querySelector('#effect-none').checked = true;
+    scaleValue.value = `${MAX_SCALE}%`;
+    document.querySelector('.text__description').value = '';
+    document.querySelector('.text__hashtags').value = '';
+  }
+
   imgUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadFile.value = '';

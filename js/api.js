@@ -29,7 +29,7 @@ const sendPhoto = async (onSuccess, onFail, body) => {
       throw new Error('Не удалось отправить форму. Попробуйте еще раз');
     }
 
-    onSuccess(response.ok);
+    onSuccess(true);
   } catch (error) {
     onFail(error.message);
   }

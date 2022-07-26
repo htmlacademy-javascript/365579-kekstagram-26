@@ -18,32 +18,21 @@ const showAllert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const messageFragment = document.createElement('div');
-const errorTemplate = document.querySelector('#error');
-const successTemplate = document.querySelector('#success');
-const closeAlertButton = document.querySelectorAll('.error__button');
-const successButton = document.querySelectorAll('.success__button');
-
-const successMessage = () => {
-  messageFragment.append(successTemplate.content.cloneNode(true));
-  document.body.append(messageFragment);
-  messageFragment.style.zIndex = '100';
-
-  successButton.addEventListener('click', () => {
-    messageFragment.remove();
-  });
-};
-
-
 const errorLoadMessage = () => {
-  messageFragment.append(errorTemplate.content.cloneNode(true));
-  document.body.append(messageFragment);
-  messageFragment.style.zIndex = '100';
+  const errorTemplate = document.querySelector('#error'); // находим template с ошибкой
 
-  closeAlertButton.addEventListener('click', () => {
-    messageFragment.remove();
-  });
+  document.body.append(errorTemplate.content.cloneNode(true)); // вставляем его содержимое прям в конец body (не надо в div вставлять а потом div в body, нет никакого смысла, сразу вставляем элемент в body и всё)
+
+  const closeAlertButton = document.querySelector('.error__button'); // и ТОЛЬКО когда вставили в конец body – ищем эту кнопку
+
+  function closeButton() {
+    document.querySelector('.error').remove(); // удаляем именно так, а не невесть как. Это новый элемент на странице, нам не надо шаблон удалять (что ты и делал, пытался удалить errorTemplate зачем-то). Нам надо удалить вставленную форму, а она с классом error.
+
+    closeAlertButton.removeEventListener('click', closeButton);
+    closeAlertButton.removeEventListener('keydown', errorLoadMessage);
+  }
+
+  closeAlertButton.addEventListener('click', closeButton);
 };
 
-
-export {showAllert, successMessage, errorLoadMessage};
+export {showAllert, errorLoadMessage};
