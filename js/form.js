@@ -29,6 +29,12 @@ function closeForm(isFormSubmit = false) {
     const successButton = document.querySelector('.success__button');
 
     successButton.addEventListener('click', () => closeSuccessButton(successButton));
+    document.addEventListener('keydown', (evt) => {
+      if (evt.keyCode === KEY_CODES.esc) {
+        evt.preventDefault();
+        closeSuccessButton(successButton);
+      }
+    });
   }
 
   function closeSuccessButton(successButton) {
