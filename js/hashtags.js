@@ -1,4 +1,4 @@
-function validateHashtag (hashtags) {
+const validateHashtag = (hashtags) => {
   const re = /^#[A-Za-zA-Яа-яЕё0-9]{1,19}$/;
   const hashtag = ` ${hashtags.toLowerCase()}`;
   const hashtagsSet = hashtag.split(' ');
@@ -39,6 +39,6 @@ function validateHashtag (hashtags) {
     }
   }
   return true;
-}
+};
 
 export {validateHashtag};
