@@ -39,6 +39,7 @@ const errorLoadMessage = () => {
   closeAlertButton.addEventListener('click', closeButton);
   document.addEventListener('keydown', (evt) => {
     if (evt.keyCode === KEY_CODES.esc) {
+      evt.stopPropagation();
       evt.preventDefault();
       closeButton();
     }
