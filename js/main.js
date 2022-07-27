@@ -1,5 +1,12 @@
-import './pictures.js';
-import './big-picture.js';
-import './form.js';
+import {successData} from './pictures.js';
 import './validate.js';
-import './hashtags.js';
+import {
+  showAllert,
+} from './message.js';
+import {
+  getUsersPhotos,
+} from './api.js';
+import './filters.js';
+
+getUsersPhotos(successData, showAllert);
+

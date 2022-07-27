@@ -22,4 +22,4 @@ function scaleControlMax () {
   }
 }
 
-export {scaleMinValue, scaleMaxValue, scaleControlMin, scaleControlMax, imgUploadPreview};
+export {scaleMinValue, scaleMaxValue, scaleControlMin, scaleControlMax, imgUploadPreview, scaleValue, MAX_SCALE};

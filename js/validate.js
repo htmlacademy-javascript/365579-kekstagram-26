@@ -7,6 +7,18 @@ import {
   validateHashtag,
 } from './hashtags.js';
 
+import {
+  sendPhoto,
+} from './api.js';
+
+import {
+  errorLoadMessage,
+} from './message.js';
+
+import {
+  closeForm,
+} from './form.js';
+
 const imgUploadForm = document.querySelector('.img-upload__form');
 const hashtags = document.querySelector('.text__hashtags');
 
@@ -32,7 +44,7 @@ pristine.addValidator(
 
 pristine.addValidator(
   imgUploadForm.querySelector('.text__hashtags'),
-  validateHashtag,
+  () => validateHashtag(hashtags.value),
   'неправильное значение поле для хештега'
 );
 
@@ -43,14 +55,17 @@ hashtags.addEventListener('keydown', (evt) => {
   }
 });
 
+
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   if (pristine.validate()) {
-    imgUploadForm.submit();
+    sendPhoto(
+      closeForm,
+      errorLoadMessage,
+      new FormData(evt.target),
+    );
   }
 });
-
-export {imgUploadForm, hashtags};
 
 
