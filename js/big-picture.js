@@ -8,12 +8,6 @@ const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const commentsList = bigPicture.querySelector('.social__comments');
 
-const closeBigPicture = () => {
-  bigPicture.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  commentsLoader.removeEventListener('click', loadComments);
-};
-
 const loadComments = () => {
   const onClickCommentsLoader = commentsList.querySelectorAll('.hidden');
   const commentCount = socialCommentCount.querySelector('.comment-count--shown').textContent;
@@ -30,6 +24,12 @@ const loadComments = () => {
     commentsLoader.classList.add('hidden');
     socialCommentCount.querySelector('.comment-count--shown').textContent = parseInt(commentCount, 10) + onClickCommentsLoader.length;
   }
+};
+
+const closeBigPicture = () => {
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  commentsLoader.removeEventListener('click', loadComments);
 };
 
 const openBigPicture = (url, likes, comments, description) => {
@@ -84,5 +84,6 @@ const openBigPicture = (url, likes, comments, description) => {
     }
   });
 };
+
 
 export {openBigPicture};

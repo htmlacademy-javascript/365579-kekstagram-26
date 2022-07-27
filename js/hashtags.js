@@ -39,6 +39,6 @@ const validateHashtag = (hashtags) => {
     }
   }
   return true;
-}
+};
 
 export {validateHashtag};
