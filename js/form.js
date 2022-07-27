@@ -20,7 +20,7 @@ const uploadFile = document.querySelector('#upload-file');
 const imgUpload = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('#upload-cancel');
 
-function closeForm(isFormSubmit = false) {
+const closeForm = (isFormSubmit = false) => {
   if (isFormSubmit) {
     const success = document.querySelector('#success');
 
@@ -49,7 +49,7 @@ function closeForm(isFormSubmit = false) {
   imgUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadFile.value = '';
-}
+};
 
 uploadFile.addEventListener('change', (event) => {
   imgUploadPreview.removeAttribute('style');
