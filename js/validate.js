@@ -1,10 +1,13 @@
 import {
-  KEY_CODES,
   MAX_LENGTH_COMMENT,
 } from './data.js';
 
 import {
-  validateHashtag,
+  isEscapeKey,
+} from './util.js';
+
+import {
+  checkValidateHashtag,
 } from './hashtags.js';
 
 import {
@@ -12,7 +15,7 @@ import {
 } from './api.js';
 
 import {
-  errorLoadMessage,
+  loadMessageError,
 } from './message.js';
 
 import {
@@ -21,6 +24,7 @@ import {
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const hashtags = document.querySelector('.text__hashtags');
+const comment = document.querySelector('.text__description');
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper', // Элемент, на который будут добавляться классы
@@ -32,24 +36,31 @@ const pristine = new Pristine(imgUploadForm, {
 },
 false);
 
-function validateComments (value) {
+function checkValidateComments (value) {
   return value.length >= 0 && value.length <= MAX_LENGTH_COMMENT;
 }
 
 pristine.addValidator(
   imgUploadForm.querySelector('.text__description'),
-  validateComments,
+  checkValidateComments,
   `длина комментария не может составлять больше ${MAX_LENGTH_COMMENT} символов`
 );
 
 pristine.addValidator(
   imgUploadForm.querySelector('.text__hashtags'),
-  () => validateHashtag(hashtags.value),
+  () => checkValidateHashtag(hashtags.value),
   'неправильное значение поле для хештега'
 );
 
 hashtags.addEventListener('keydown', (evt) => {
-  if (evt.keyCode === KEY_CODES.esc) {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+    evt.preventDefault();
+  }
+});
+
+comment.addEventListener('keydown', (evt) => {
+  if (isEscapeKey(evt)) {
     evt.stopPropagation();
     evt.preventDefault();
   }
@@ -62,7 +73,7 @@ imgUploadForm.addEventListener('submit', (evt) => {
   if (pristine.validate()) {
     sendPhoto(
       closeForm,
-      errorLoadMessage,
+      loadMessageError,
       new FormData(evt.target),
     );
   }

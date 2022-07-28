@@ -1,6 +1,6 @@
 import {
-  KEY_CODES,
-} from './data.js';
+  isEscapeKey,
+} from './util.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
@@ -78,7 +78,7 @@ const openBigPicture = (url, likes, comments, description) => {
   });
 
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === KEY_CODES.esc) {
+    if (isEscapeKey(evt)) {
       evt.preventDefault();
       closeBigPicture();
     }

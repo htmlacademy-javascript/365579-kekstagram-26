@@ -1,6 +1,6 @@
 import {
-  KEY_CODES,
-} from './data.js';
+  isEscapeKey,
+} from './util.js';
 
 const showAllert = (message) => {
   const ALERT_SHOW_TIME = 5000;
@@ -22,28 +22,34 @@ const showAllert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const errorLoadMessage = () => {
+const loadMessageError = () => {
   const errorTemplate = document.querySelector('#error');
 
   document.body.append(errorTemplate.content.cloneNode(true));
 
   const closeAlertButton = document.querySelector('.error__button');
 
-  function closeButton() {
+  function pushCloseButton() {
     document.querySelector('.error').remove();
 
-    closeAlertButton.removeEventListener('click', closeButton);
-    closeAlertButton.removeEventListener('keydown', errorLoadMessage);
+    closeAlertButton.removeEventListener('click', pushCloseButton);
+    closeAlertButton.removeEventListener('keydown', loadMessageError);
   }
 
-  closeAlertButton.addEventListener('click', closeButton);
+  closeAlertButton.addEventListener('click', pushCloseButton);
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === KEY_CODES.esc) {
+    if (isEscapeKey(evt)) {
       evt.stopPropagation();
       evt.preventDefault();
-      closeButton();
+      pushCloseButton();
     }
   });
+
+  document.onclick = (element) => {
+    if (element.target.className !== '.error') {
+      document.querySelector('.error').remove();
+    }
+  };
 };
 
-export {showAllert, errorLoadMessage};
+export {showAllert, loadMessageError};

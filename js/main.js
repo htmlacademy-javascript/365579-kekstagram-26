@@ -7,6 +7,9 @@ import {
   getUsersPhotos,
 } from './api.js';
 import './filters.js';
+import {
+  debounce,
+} from './util.js';
 
-getUsersPhotos(successData, showAllert);
+getUsersPhotos(debounce(successData), showAllert);
 

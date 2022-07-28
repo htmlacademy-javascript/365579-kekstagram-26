@@ -1,18 +1,18 @@
-const validateHashtag = (hashtags) => {
-  const re = /^#[A-Za-zA-Яа-яЕё0-9]{1,19}$/;
+const checkValidateHashtag = (hashtags) => {
+  const RE = /^#[A-Za-zA-Яа-яЕё0-9]{1,19}$/;
   const hashtag = ` ${hashtags.toLowerCase()}`;
   const hashtagsSet = hashtag.split(' ');
   hashtagsSet.shift();
   const uniqueHashtag = Array.from(new Set(hashtagsSet));
-  const maxHachtagsLength = 20;
-  const maxHachtagsCount = 5;
+  const MAX_HACHTAGS_LENGTH = 20;
+  const MAX_HACHTAGS_COUNT = 5;
 
 
   if (hashtagsSet.length > uniqueHashtag.length) {
     return false;
   }
 
-  if (hashtagsSet.length > maxHachtagsCount) {
+  if (hashtagsSet.length > MAX_HACHTAGS_COUNT) {
     return false;
   }
 
@@ -30,15 +30,15 @@ const validateHashtag = (hashtags) => {
       return false;
     }
 
-    if (hashtagsSet[i].length > maxHachtagsLength) {
+    if (hashtagsSet[i].length > MAX_HACHTAGS_LENGTH) {
       return false;
     }
 
-    if (!re.test(hashtagsSet[i])) {
+    if (!RE.test(hashtagsSet[i])) {
       return false;
     }
   }
   return true;
 };
 
-export {validateHashtag};
+export {checkValidateHashtag};

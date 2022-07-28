@@ -1,7 +1,9 @@
 import {
-  KEY_CODES,
   sliderMainSettings,
 } from './data.js';
+import {
+  isEscapeKey,
+} from './util.js';
 import {
   scaleMinValue,
   scaleMaxValue,
@@ -20,17 +22,22 @@ const uploadFile = document.querySelector('#upload-file');
 const imgUpload = document.querySelector('.img-upload__overlay');
 const uploadCancel = document.querySelector('#upload-cancel');
 
+const removeScaleControl = () => {
+  scaleMinValue.removeEventListener('click', scaleControlMin);
+  scaleMaxValue.removeEventListener('click', scaleControlMax);
+};
+
 const closeForm = (isFormSubmit = false) => {
   if (isFormSubmit) {
     const success = document.querySelector('#success');
 
-    document.body.appendChild(success.content.cloneNode(true));
+    document.body.append(success.content.cloneNode(true));
 
     const successButton = document.querySelector('.success__button');
 
     successButton.addEventListener('click', () => closeSuccessButton(successButton));
     document.addEventListener('keydown', (evt) => {
-      if (evt.keyCode === KEY_CODES.esc) {
+      if (isEscapeKey(evt)) {
         evt.preventDefault();
         closeSuccessButton(successButton);
       }
@@ -49,6 +56,12 @@ const closeForm = (isFormSubmit = false) => {
   imgUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadFile.value = '';
+
+  document.onclick = (element) => {
+    if (element.target.className !== '.success') {
+      document.querySelector('.success').remove();
+    }
+  };
 };
 
 uploadFile.addEventListener('change', (event) => {
@@ -62,7 +75,7 @@ uploadFile.addEventListener('change', (event) => {
   }
 
   const fileReader = new FileReader();
-  fileReader.onload = function() {
+  fileReader.onload = () => {
     imgUploadPreview.src = fileReader.result;
   };
 
@@ -78,18 +91,16 @@ uploadFile.addEventListener('change', (event) => {
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode === KEY_CODES.esc) {
+    if (isEscapeKey(evt)) {
       evt.preventDefault();
-      scaleMinValue.removeEventListener('click', scaleControlMin);
-      scaleMaxValue.removeEventListener('click', scaleControlMax);
+      removeScaleControl();
       closeForm();
     }
   });
 });
 
 uploadCancel.addEventListener('click', () => {
-  scaleMinValue.removeEventListener('click', scaleControlMin);
-  scaleMaxValue.removeEventListener('click', scaleControlMax);
+  removeScaleControl();
   closeForm();
 });
 
