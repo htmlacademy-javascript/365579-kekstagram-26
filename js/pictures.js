@@ -6,13 +6,13 @@ const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const pictureElements = userPicture.querySelectorAll('.picture');
-pictureElements.forEach((element) => {
-  element.remove();
-});
-
 const renderUsersPhotos = (usersPhoto) => {
   const pictureGaleryFragment = document.createDocumentFragment();
+
+  const pictureElements = userPicture.querySelectorAll('.picture');
+  pictureElements.forEach((element) => {
+    element.remove();
+  });
 
   usersPhoto.forEach(({url, likes, comments, description}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
