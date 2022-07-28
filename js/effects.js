@@ -2,6 +2,11 @@ import {
   sliderMainSettings,
 } from './data.js';
 
+import {
+  removeStyle,
+  removeClass,
+} from './util.js';
+
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const slider = document.querySelector('.effect-level');
 const sliderElement = slider.querySelector('.effect-level__slider');
@@ -45,7 +50,7 @@ effectButtons.forEach((element) => {
       step: 0.1,
     };
 
-    imgUploadPreview.removeAttribute('class');
+    removeClass(imgUploadPreview);
 
     if (element.value === 'marvin') {
       settings.range.max = 100;
@@ -65,7 +70,7 @@ effectButtons.forEach((element) => {
     }
 
     if (element.value === 'none') {
-      imgUploadPreview.removeAttribute('style');
+      removeStyle(imgUploadPreview);
       slider.classList.add('hidden');
     } else {
       imgUploadPreview.classList.add(`effects__preview--${element.value}`);

@@ -3,6 +3,8 @@ import {
 } from './data.js';
 import {
   isEscapeKey,
+  removeStyle,
+  removeClass,
 } from './util.js';
 import {
   scaleMinValue,
@@ -56,7 +58,7 @@ const closeForm = (isFormSubmit = false) => {
   imgUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadFile.value = '';
-
+  //и по клику на произвольную область экрана за пределами блока с сообщением
   document.onclick = (element) => {
     if (element.target.className !== '.success') {
       document.querySelector('.success').remove();
@@ -65,8 +67,8 @@ const closeForm = (isFormSubmit = false) => {
 };
 
 uploadFile.addEventListener('change', (event) => {
-  imgUploadPreview.removeAttribute('style');
-  imgUploadPreview.removeAttribute('class');
+  removeStyle(imgUploadPreview);
+  removeClass(imgUploadPreview);
 
   const target = event.target;
 
@@ -92,7 +94,7 @@ uploadFile.addEventListener('change', (event) => {
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
-      evt.preventDefault();
+      evt.preventDefault();//если фокус находится в поле ввода комментария, нажатие на Esc не должно приводить к закрытию формы редактирования изображения.+
       removeScaleControl();
       closeForm();
     }

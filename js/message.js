@@ -44,7 +44,7 @@ const loadMessageError = () => {
       pushCloseButton();
     }
   });
-
+  //и по клику на произвольную область экрана за пределами блока с сообщением
   document.onclick = (element) => {
     if (element.target.className !== '.error') {
       document.querySelector('.error').remove();

@@ -1,5 +1,9 @@
-import {openBigPicture} from './big-picture.js';
-import {getFiltersPhoto} from './filters.js';
+import {
+  openBigPicture,
+} from './big-picture.js';
+import {
+  getFiltersPhoto,
+} from './filters.js';
 
 const userPicture = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
@@ -29,10 +33,10 @@ const renderUsersPhotos = (usersPhoto) => {
 
   userPicture.append(pictureGaleryFragment);
 };
-
-const successData = (usersPhoto) => {
+////iltersPhoto, sortsPicturesRandom, sortsPicturesByComment, successData - переименованы
+const SuccessDataHandler = (usersPhoto) => {
   getFiltersPhoto(usersPhoto);
   renderUsersPhotos(usersPhoto);
 };
 
-export {successData, renderUsersPhotos};
+export {SuccessDataHandler, renderUsersPhotos};

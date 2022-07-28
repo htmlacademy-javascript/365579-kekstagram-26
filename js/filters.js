@@ -1,8 +1,14 @@
-import {getRandomInt} from './util.js';
-import {renderUsersPhotos} from './pictures.js';
-import {COUNT_RANDOM_PHOTOS} from './data.js';
-
-const sortsPicturesRandom = (pictures) => {
+import {
+  getRandomInt,
+} from './util.js';
+import {
+  renderUsersPhotos,
+} from './pictures.js';
+import {
+  COUNT_RANDOM_PHOTOS,
+} from './data.js';
+////iltersPhoto, sortsPicturesRandom, sortsPicturesByComment, successData - переименованы
+const sortPicturesRandom = (pictures) => {
   const picturesCopy = pictures.slice();
   const randomPictures = [];
 
@@ -14,8 +20,8 @@ const sortsPicturesRandom = (pictures) => {
 
   return randomPictures;
 };
-
-const sortsPicturesByComment = (pictures) => {
+////iltersPhoto, sortsPicturesRandom, sortsPicturesByComment, successData - переименованы
+const sortPicturesByComment = (pictures) => {
   const picturesCopy = pictures.slice();
 
   picturesCopy.sort((a, b) =>
@@ -24,15 +30,15 @@ const sortsPicturesByComment = (pictures) => {
 
   return picturesCopy.reverse();
 };
-
+//iltersPhoto, sortsPicturesRandom, sortsPicturesByComment, successData - переименованы
 const getFiltersPhoto = (usersPhoto) => {
   const filters = document.querySelector('.img-filters');
   const filtersButtons = filters.querySelectorAll('.img-filters__button');
 
   const filterMethods = {
     default: (array) => array,
-    random: (array) => sortsPicturesRandom(array),
-    discussed: (array) => sortsPicturesByComment(array),
+    random: (array) => sortPicturesRandom(array),
+    discussed: (array) => sortPicturesByComment(array),
   };
 
   filters.classList.remove('img-filters--inactive');
@@ -40,10 +46,9 @@ const getFiltersPhoto = (usersPhoto) => {
   filtersButtons.forEach((button) => {
     const filterType = button.getAttribute('id').replace('filter-', '');
 
-    button.addEventListener('click', (evt) => {
+    button.addEventListener('click', () => {
       const filteredPhotos = filterMethods[filterType](usersPhoto);
       renderUsersPhotos(filteredPhotos);
-      evt.preventDefault();
 
       const activeButton = document.querySelector('img-filters__button--active');
 

@@ -35,7 +35,7 @@ const pristine = new Pristine(imgUploadForm, {
   errorTextClass: 'pristine__error' // Класс для элемента с текстом ошибки
 },
 false);
-
+//validateHashtag | validateComments | - функция возвращающие boolean должны иметь соответсвующее название,
 function checkValidateComments (value) {
   return value.length >= 0 && value.length <= MAX_LENGTH_COMMENT;
 }

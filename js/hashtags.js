@@ -1,3 +1,5 @@
+//validateHashtag | validateComments | - функция возвращающие boolean должны иметь соответсвующее название
+//const maxHachtagsLength = 20; const maxHachtagsCount = 5; const re = /^#[A-Za-zA-Яа-яЕё0-9]{1,19}$/; Не все константы имеют верный регистр
 const checkValidateHashtag = (hashtags) => {
   const RE = /^#[A-Za-zA-Яа-яЕё0-9]{1,19}$/;
   const hashtag = ` ${hashtags.toLowerCase()}`;
