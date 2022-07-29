@@ -1,9 +1,5 @@
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const getRandomInt = (min, max) => (min < 0 || max <= min)
-  ? false
-  : Math.floor(Math.random() * (max - min + 1)) + min;
-
 const removeStyle = (element) => {
   element.removeAttribute('style');
 };
@@ -11,7 +7,14 @@ const removeStyle = (element) => {
 const removeClass = (element) => {
   element.removeAttribute('class');
 };
-//getRandomArrayElement, debounce ( почему-то не используется, что не соответствует главному критерию по ТЗ ) и другие переменные / функции
+
+const onPreventsDefault = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+    evt.preventDefault();
+  }
+};
+
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
 
@@ -21,4 +24,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {isEscapeKey, getRandomInt, removeStyle, removeClass, debounce};
+export {isEscapeKey, removeStyle, removeClass, onPreventsDefault, debounce};

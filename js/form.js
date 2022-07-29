@@ -1,11 +1,9 @@
 import {
-  sliderMainSettings,
-} from './data.js';
-import {
   isEscapeKey,
   removeStyle,
   removeClass,
 } from './util.js';
+
 import {
   scaleMinValue,
   scaleMaxValue,
@@ -15,9 +13,11 @@ import {
   scaleValue,
   MAX_SCALE,
 } from './scale-control.js';
+
 import {
   slider,
   sliderElement,
+  sliderMainSettings,
 } from './effects.js';
 
 const uploadFile = document.querySelector('#upload-file');
@@ -58,12 +58,17 @@ const closeForm = (isFormSubmit = false) => {
   imgUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadFile.value = '';
-  //и по клику на произвольную область экрана за пределами блока с сообщением
+
   document.onclick = (element) => {
     if (element.target.className !== '.success') {
       document.querySelector('.success').remove();
     }
   };
+};
+
+const resetForm = () => {
+  removeScaleControl();
+  closeForm();
 };
 
 uploadFile.addEventListener('change', (event) => {
@@ -94,16 +99,12 @@ uploadFile.addEventListener('change', (event) => {
 
   document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
-      evt.preventDefault();//если фокус находится в поле ввода комментария, нажатие на Esc не должно приводить к закрытию формы редактирования изображения.+
-      removeScaleControl();
-      closeForm();
+      evt.preventDefault();
+      resetForm();
     }
   });
 });
 
-uploadCancel.addEventListener('click', () => {
-  removeScaleControl();
-  closeForm();
-});
+uploadCancel.addEventListener('click', resetForm);
 
 export {closeForm};

@@ -11,7 +11,7 @@ const pictureTemplate = document.querySelector('#picture')
   .querySelector('.picture');
 
 const renderUsersPhotos = (usersPhoto) => {
-  const pictureGaleryFragment = document.createDocumentFragment();
+  const pictureGalleryFragment = document.createDocumentFragment();
 
   const pictureElements = userPicture.querySelectorAll('.picture');
   pictureElements.forEach((element) => {
@@ -23,7 +23,7 @@ const renderUsersPhotos = (usersPhoto) => {
     pictureElement.querySelector('.picture__img').src = url;
     pictureElement.querySelector('.picture__likes').textContent = likes;
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
-    pictureGaleryFragment.append(pictureElement);
+    pictureGalleryFragment.append(pictureElement);
 
     pictureElement.addEventListener('click', (evt) => {
       evt.preventDefault();
@@ -31,9 +31,9 @@ const renderUsersPhotos = (usersPhoto) => {
     });
   });
 
-  userPicture.append(pictureGaleryFragment);
+  userPicture.append(pictureGalleryFragment);
 };
-////iltersPhoto, sortsPicturesRandom, sortsPicturesByComment, successData - переименованы
+
 const SuccessDataHandler = (usersPhoto) => {
   getFiltersPhoto(usersPhoto);
   renderUsersPhotos(usersPhoto);

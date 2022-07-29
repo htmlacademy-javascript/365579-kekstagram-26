@@ -1,11 +1,17 @@
 import {
-  sliderMainSettings,
-} from './data.js';
-
-import {
   removeStyle,
   removeClass,
 } from './util.js';
+
+const sliderMainSettings = {
+  range: {
+    min: 0,
+    max: 1,
+  },
+  start: 0,
+  step: 0.1,
+  connect: 'lower',
+};
 
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const slider = document.querySelector('.effect-level');
@@ -80,5 +86,5 @@ effectButtons.forEach((element) => {
   });
 });
 
-export {slider, sliderElement};
+export {slider, sliderElement, sliderMainSettings};
 

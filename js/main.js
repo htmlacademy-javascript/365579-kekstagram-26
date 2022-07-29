@@ -5,7 +5,7 @@ import {
 import './validate.js';
 
 import {
-  showAllert,
+  showAlert,
 } from './message.js';
 
 import {
@@ -18,5 +18,5 @@ import {
   debounce,
 } from './util.js';
 
-getUsersPhotos(debounce(SuccessDataHandler), showAllert);
+getUsersPhotos(debounce(SuccessDataHandler), showAlert);
 

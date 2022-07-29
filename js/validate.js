@@ -1,9 +1,5 @@
 import {
-  MAX_LENGTH_COMMENT,
-} from './data.js';
-
-import {
-  isEscapeKey,
+  onPreventsDefault,
 } from './util.js';
 
 import {
@@ -22,6 +18,7 @@ import {
   closeForm,
 } from './form.js';
 
+const MAX_LENGTH_COMMENT = 140;
 const imgUploadForm = document.querySelector('.img-upload__form');
 const hashtags = document.querySelector('.text__hashtags');
 const comment = document.querySelector('.text__description');
@@ -52,19 +49,9 @@ pristine.addValidator(
   'неправильное значение поле для хештега'
 );
 
-hashtags.addEventListener('keydown', (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.stopPropagation();
-    evt.preventDefault();
-  }
-});
+hashtags.addEventListener('keydown', onPreventsDefault);
 
-comment.addEventListener('keydown', (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.stopPropagation();
-    evt.preventDefault();
-  }
-});
+comment.addEventListener('keydown', onPreventsDefault);
 
 
 imgUploadForm.addEventListener('submit', (evt) => {

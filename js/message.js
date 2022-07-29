@@ -2,7 +2,7 @@ import {
   isEscapeKey,
 } from './util.js';
 
-const showAllert = (message) => {
+const showAlert = (message) => {
   const ALERT_SHOW_TIME = 5000;
   const alert = document.createElement('div');
   alert.style.position = 'absolute';
@@ -44,7 +44,7 @@ const loadMessageError = () => {
       pushCloseButton();
     }
   });
-  //и по клику на произвольную область экрана за пределами блока с сообщением
+
   document.onclick = (element) => {
     if (element.target.className !== '.error') {
       document.querySelector('.error').remove();
@@ -52,4 +52,4 @@ const loadMessageError = () => {
   };
 };
 
-export {showAllert, loadMessageError};
+export {showAlert, loadMessageError};
