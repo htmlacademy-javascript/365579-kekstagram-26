@@ -1,10 +1,9 @@
 import {
-  KEY_CODES,
-  MAX_LENGTH_COMMENT,
-} from './data.js';
+  onPreventsDefault,
+} from './util.js';
 
 import {
-  validateHashtag,
+  checkValidateHashtag,
 } from './hashtags.js';
 
 import {
@@ -12,15 +11,17 @@ import {
 } from './api.js';
 
 import {
-  errorLoadMessage,
+  loadMessageError,
 } from './message.js';
 
 import {
   closeForm,
 } from './form.js';
 
+const MAX_LENGTH_COMMENT = 140;
 const imgUploadForm = document.querySelector('.img-upload__form');
 const hashtags = document.querySelector('.text__hashtags');
+const comment = document.querySelector('.text__description');
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper', // Элемент, на который будут добавляться классы
@@ -31,29 +32,26 @@ const pristine = new Pristine(imgUploadForm, {
   errorTextClass: 'pristine__error' // Класс для элемента с текстом ошибки
 },
 false);
-
-function validateComments (value) {
+//validateHashtag | validateComments | - функция возвращающие boolean должны иметь соответсвующее название,
+function checkValidateComments (value) {
   return value.length >= 0 && value.length <= MAX_LENGTH_COMMENT;
 }
 
 pristine.addValidator(
   imgUploadForm.querySelector('.text__description'),
-  validateComments,
+  checkValidateComments,
   `длина комментария не может составлять больше ${MAX_LENGTH_COMMENT} символов`
 );
 
 pristine.addValidator(
   imgUploadForm.querySelector('.text__hashtags'),
-  () => validateHashtag(hashtags.value),
+  () => checkValidateHashtag(hashtags.value),
   'неправильное значение поле для хештега'
 );
 
-hashtags.addEventListener('keydown', (evt) => {
-  if (evt.keyCode === KEY_CODES.esc) {
-    evt.stopPropagation();
-    evt.preventDefault();
-  }
-});
+hashtags.addEventListener('keydown', onPreventsDefault);
+
+comment.addEventListener('keydown', onPreventsDefault);
 
 
 imgUploadForm.addEventListener('submit', (evt) => {
@@ -62,7 +60,7 @@ imgUploadForm.addEventListener('submit', (evt) => {
   if (pristine.validate()) {
     sendPhoto(
       closeForm,
-      errorLoadMessage,
+      loadMessageError,
       new FormData(evt.target),
     );
   }

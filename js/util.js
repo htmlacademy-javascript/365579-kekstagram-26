@@ -1,15 +1,19 @@
-const getRandomInt = (min, max) => {
-  if(min < 0) {
-    return false;
-  }
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-  if(max <= min) {
-    return false;
-  }
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+const removeStyle = (element) => {
+  element.removeAttribute('style');
 };
 
-const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length -1)];
+const removeClass = (element) => {
+  element.removeAttribute('class');
+};
+
+const onPreventsDefault = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+    evt.preventDefault();
+  }
+};
 
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
@@ -20,4 +24,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {getRandomInt, getRandomArrayElement, debounce};
+export {isEscapeKey, removeStyle, removeClass, onPreventsDefault, debounce};

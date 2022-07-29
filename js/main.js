@@ -1,12 +1,22 @@
-import {successData} from './pictures.js';
-import './validate.js';
 import {
-  showAllert,
+  SuccessDataHandler,
+} from './pictures.js';
+
+import './validate.js';
+
+import {
+  showAlert,
 } from './message.js';
+
 import {
   getUsersPhotos,
 } from './api.js';
+
 import './filters.js';
 
-getUsersPhotos(successData, showAllert);
+import {
+  debounce,
+} from './util.js';
+
+getUsersPhotos(debounce(SuccessDataHandler), showAlert);
 
